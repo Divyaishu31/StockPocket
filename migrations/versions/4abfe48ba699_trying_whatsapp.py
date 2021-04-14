@@ -1,8 +1,8 @@
-"""Login and Registration
+"""Trying WhatsApp
 
-Revision ID: b56e1b0a18af
+Revision ID: 4abfe48ba699
 Revises: 
-Create Date: 2021-04-14 16:01:40.956469
+Create Date: 2021-04-14 20:21:32.590058
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b56e1b0a18af'
+revision = '4abfe48ba699'
 down_revision = None
 branch_labels = None
 depends_on = None
