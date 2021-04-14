@@ -5,7 +5,7 @@ from project.models import User, Portfolio
 from project.users.forms import RegistrationForm, LoginForm, AddStockForm
 
 import os
-# from twilio.rest import Client
+from twilio.rest import Client
 
 users = Blueprint("users", __name__)
 
@@ -21,15 +21,15 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        # account_sid = 'ACa742d41a965006039b4c6b9a7dfd2632'
-        # auth_token = '4180e04cea6b021dace22c1db1680c37'
-        # client = Client(account_sid, auth_token)
-        # 
-        # message = client.messages.create(
-        #                               body='Hi there! Thanks for registering!!',
-        #                               from_='whatsapp:+14155238886',
-        #                               to='whatsapp:' + form.mobile.data
-        #                           )
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+                                      body='Hi there! Thanks for registering!!',
+                                      from_='whatsapp:+14155238886',
+                                      to='whatsapp:' + form.mobile.data
+                                  )
 
         return redirect(url_for("users.login"))
 
