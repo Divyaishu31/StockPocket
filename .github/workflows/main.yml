@@ -66,5 +66,17 @@ jobs:
          - name: Deploy new application version
            run : aws elasticbeanstalk update-environment --environment-name ${{ env.EB_ENVIRONMENT_NAME }} --version-label "Ver-${{ github.sha }}"
            
+         - name: Install requirements.txt
+           run : pip install -r requirements.txt  
+           
+         - name: Set up database
+           run : flask db init
+           
+         - name: Set up migrations
+           run : flask db migrate -m "Trying migrations"  
+           
+         - name: Final steps
+           run : flask db upgrade 
+           
          - name: CD pipeline done
            run : echo "Package deployed on EC2"  
