@@ -8,11 +8,11 @@
 #---------------------------------------------------------------------
 name: CI/CD pipeline
 env:
-  EB_PACKAGE_S3_BUCKET_NAME : "stock.pocket.mohit"
-  EB_APPLICATION_NAME       : "PocketStock"
-  EB_ENVIRONMENT_NAME       : "Pocketstock-env"
+  EB_PACKAGE_S3_BUCKET_NAME : "stockpocketmohit"
+  EB_APPLICATION_NAME       : "StockPocket"
+  EB_ENVIRONMENT_NAME       : "Stockpocket-env"
   DEPLOY_PACKAGE_NAME       : "${{ github.sha }}.zip"
-  AWS_REGION_NAME           : "us-west-2"
+  AWS_REGION_NAME           : "us-east-2"
 
 on: 
   push:
