@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<br>
+<br>
+
+
+<div class="container">
+  <table style="width:25%" border="3px">
+    <tr>
+      <th> Your Stocks</th>
+
+    </tr>
+    {% for item in stickers %}
+    <tr>
+      <td>{{item}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+</div>
+
+{% endblock %}
