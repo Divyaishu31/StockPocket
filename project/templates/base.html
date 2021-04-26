@@ -3,7 +3,7 @@
   <head>
 
     <meta charset="utf-8">
-    <title>TitleToBeGiven</title>
+    <title>Stock Pocket</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -35,7 +35,7 @@
             <a class="text-muted" href="#">
               <img src="../static/logo.jpeg" width="40" height="40" align="left">
             </a>
-            <a class="blog-header-logo text-dark" href="{{url_for("core.index")}}">Name</a>
+            <a class="blog-header-logo text-dark" ref="{{url_for("core.index")}}">Stock Pocket</a>
           </div>
 
           {% if not current_user.is_authenticated %}
@@ -55,9 +55,9 @@
 
       <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="{{url_for("core.index")}}">Compare</a>
+          <a class="p-2 text-muted" href="{{url_for("core.index")}}">Compare Stock</a>
           {% if current_user.is_authenticated %}
-            <a class="p-2 text-muted" href="{{url_for("users.addStock")}}">Portfolio</a>
+            <a class="p-2 text-muted" href="{{url_for("users.addStock")}}">Add Stock</a>
           {% endif %}
           <a class="p-2 text-muted" href="#"></a>
           <a class="p-2 text-muted" href="#"></a>
