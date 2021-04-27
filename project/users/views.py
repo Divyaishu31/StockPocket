@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from project import db
 from project.models import User, Portfolio
-from project.users.forms import RegistrationForm, LoginForm, AddStockForm
+from project.users.forms import RegistrationForm, LoginForm, AddStockForm,UpdateForm
 
 import os
 from twilio.rest import Client
@@ -84,3 +84,30 @@ def addStock():
         return redirect(url_for("users.addStock"))
 
     return render_template("addStock.html",form=form)
+
+@users.route('/show',methods = ['GET','POST'])
+@login_required
+def show():
+     stickers = Portfolio.query.filter_by(mobile = current_user.mobile).all() #List
+     print(stickers)
+     for i in range(len(stickers)):
+         stickers[i] = str(stickers[i]).split()[3]
+     return render_template('showpocket.html',stickers=stickers)
+
+
+@users.route('/update',methods = ['GET','POST'])
+@login_required
+def update():
+    stock = Portfolio.query.filter_by(mobile=current_user.mobile)
+    print(stock.all())
+    form = UpdateForm()
+    if form.validate_on_submit():
+        sticker = form.sticker.data
+        stock = Portfolio.query.filter_by(mobile=current_user.mobile,sticker=sticker).first()
+        print(type(stock))
+        print(stock)
+        if stock is not None:
+            db.session.delete(stock)
+            db.session.commit()
+        return redirect(url_for("users.show"))
+    return render_template("update.html",form=form)

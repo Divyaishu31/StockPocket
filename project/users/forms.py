@@ -26,3 +26,7 @@ class AddStockForm(FlaskForm):
 
     sticker = StringField("Stock sticker", validators = [DataRequired()])
     submit = SubmitField("Add stock")
+
+class UpdateForm(FlaskForm):
+    sticker = StringField("Enter stock to be removed from your pocket", validators = [DataRequired()])
+    submit = SubmitField("Delete stock")
