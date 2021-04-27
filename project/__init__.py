@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+#Show pipeline - meeting
+
 #Set up Flask application
 application = Flask(__name__)
 
