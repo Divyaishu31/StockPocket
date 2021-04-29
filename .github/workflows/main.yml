@@ -4,7 +4,7 @@
 # Version      Date        Info
 # 1.0          2021        Initial Version
 #
-# Made by Mohit Kakkar
+# Developed by Mohit Kakkar
 #---------------------------------------------------------------------
 name: CI/CD pipeline
 env:
