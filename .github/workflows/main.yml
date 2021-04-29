@@ -35,10 +35,7 @@ jobs:
              registry: docker.io
              username: ${{ secrets.DOCKER_USERNAME }}
              password: ${{ secrets.DOCKER_PASSWORD }}
-             
-         - name: Pull docker image
-           run: docker pull ghcr.io/mohitkakkar94/stockpocket:latest
-            
+   
          - name: Create ZIP deployment package
            run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./  -x  *.git*
            
