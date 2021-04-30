@@ -36,4 +36,4 @@ COPY . /application
 WORKDIR /application
 
 # start web server
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "application:application", "--workers=5"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:application", "--workers=5"]
