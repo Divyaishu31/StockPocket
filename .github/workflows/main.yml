@@ -1,0 +1,80 @@
+
+#---------------------------------------------------------------------
+# GitHub Action Workflow to Deploy Flask App on AWS
+#
+# Version      Date        Info
+# 1.0          2021        Initial Version
+#
+# Developed by Mohit Kakkar
+#---------------------------------------------------------------------
+name: CI/CD pipeline
+env:
+  EB_PACKAGE_S3_BUCKET_NAME : "stockpocketmohit"
+  EB_APPLICATION_NAME       : "StockPocket"
+  EB_ENVIRONMENT_NAME       : "Stockpocket-env"
+  DEPLOY_PACKAGE_NAME       : "${{ github.sha }}.zip"
+  AWS_REGION_NAME           : "us-east-2"
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+    ci_pipeline:
+       runs-on: ubuntu-latest
+       
+       steps:
+         - name: Git clone repository
+           uses: actions/checkout@v1
+
+         - name: Build and Push Docker Image
+           uses: mr-smithers-excellent/docker-build-push@v4
+           with:
+             image: mohitkakkar94/stockpocket
+             tag: latest
+             registry: docker.io
+             username: ${{ secrets.DOCKER_USERNAME }}
+             password: ${{ secrets.DOCKER_PASSWORD }}
+   
+         - name: Create ZIP deployment package
+           run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./  -x  *.git*
+           
+         - name: Configure AWS Credentials
+           uses: aws-actions/configure-aws-credentials@v1
+           with:
+             aws-access-key-id    : ${{ secrets.MY_AWS_ACCESS_KEY }}
+             aws-secret-access-key: ${{ secrets.MY_AWS_SECRET_KEY }}
+             aws-region           : ${{ env.AWS_REGION_NAME }}
+
+         - name: Copy deployment package to S3 bucket
+           run : aws s3 cp ${{ env.DEPLOY_PACKAGE_NAME }} s3://${{ env.EB_PACKAGE_S3_BUCKET_NAME}}/
+         
+         - name: CI pipeline done
+           run : echo "Package created and deployed on S3 bucket"
+           
+    cd_pipeline:
+       runs-on: ubuntu-latest
+       needs: [ci_pipeline]
+       
+       steps:
+         - name: Configure AWS Credentials
+           uses: aws-actions/configure-aws-credentials@v1
+           with:
+             aws-access-key-id    : ${{ secrets.MY_AWS_ACCESS_KEY }}
+             aws-secret-access-key: ${{ secrets.MY_AWS_SECRET_KEY }}
+             aws-region           : ${{ env.AWS_REGION_NAME }}
+         
+         - name: Create new Elastic Beanstalk application version
+           run : |
+            aws elasticbeanstalk create-application-version \
+            --application-name ${{ env.EB_APPLICATION_NAME }} \
+            --source-bundle S3Bucket="${{ env.EB_PACKAGE_S3_BUCKET_NAME }}",S3Key="${{ env.DEPLOY_PACKAGE_NAME }}" \
+            --version-label "Ver-${{ github.sha }}" \
+            --description "CommitSHA-${{ github.sha }}"
+            
+         - name: Deploy new application version
+           run : aws elasticbeanstalk update-environment --environment-name ${{ env.EB_ENVIRONMENT_NAME }} --version-label "Ver-${{ github.sha }}"
+           
+         - name: CD pipeline done
+           run : echo "Package deployed on EC2"
