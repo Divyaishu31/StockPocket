@@ -1,3 +1,4 @@
+gunicorn
 alembic==0.9.9
 blinker==1.4
 chardet==3.0.4
