@@ -1,10 +1,11 @@
+
 #---------------------------------------------------------------------
 # GitHub Action Workflow to Deploy Flask App on AWS
 #
 # Version      Date        Info
 # 1.0          2021        Initial Version
 #
-# Made by Mohit Kakkar
+# Developed by Mohit Kakkar
 #---------------------------------------------------------------------
 name: CI/CD pipeline
 env:
@@ -18,6 +19,7 @@ on:
   push:
     branches: 
       - master
+  workflow_dispatch:
 
 jobs:
     ci_pipeline:
@@ -26,7 +28,16 @@ jobs:
        steps:
          - name: Git clone repository
            uses: actions/checkout@v1
-            
+
+         - name: Build and Push Docker Image
+           uses: mr-smithers-excellent/docker-build-push@v4
+           with:
+             image: mohitkakkar94/stockpocket
+             tag: latest
+             registry: docker.io
+             username: ${{ secrets.DOCKER_USERNAME }}
+             password: ${{ secrets.DOCKER_PASSWORD }}
+   
          - name: Create ZIP deployment package
            run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./  -x  *.git*
            
@@ -67,4 +78,4 @@ jobs:
            run : aws elasticbeanstalk update-environment --environment-name ${{ env.EB_ENVIRONMENT_NAME }} --version-label "Ver-${{ github.sha }}"
            
          - name: CD pipeline done
-           run : echo "Package deployed on EC2"  
+           run : echo "Package deployed on EC2"
