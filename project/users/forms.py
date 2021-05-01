@@ -30,3 +30,13 @@ class AddStockForm(FlaskForm):
 class UpdateForm(FlaskForm):
     sticker = StringField("Enter stock to be removed from your pocket", validators = [DataRequired()])
     submit = SubmitField("Delete stock")
+
+class About(FlaskForm):
+
+    tag = StringField("Company Tag", validators = [DataRequired()])
+    submit = SubmitField("Search")
+
+class Compare(FlaskForm):
+    comp1 = StringField("Company Tag", validators=[DataRequired()])
+    comp2 = StringField("Compare With", validators=[DataRequired()])
+    submit = SubmitField("Compare")
