@@ -78,8 +78,6 @@ def addStock():
         db.session.add(stock)
         db.session.commit()
 
-        # Puppy.query.filter_by(name="Frankie")
-
         stock = Portfolio.query.filter_by(mobile=current_user.mobile)
         print(stock.all())
 
