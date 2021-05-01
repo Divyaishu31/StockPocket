@@ -1,8 +1,8 @@
-"""Trial 2
+"""updated portfolio table and added id column
 
-Revision ID: c5d66fda174a
+Revision ID: 27d2ed17ab0b
 Revises: 
-Create Date: 2021-04-23 02:59:01.581839
+Create Date: 2021-05-01 12:04:14.241586
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c5d66fda174a'
+revision = '27d2ed17ab0b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,10 +26,11 @@ def upgrade():
     )
     op.create_index(op.f('ix_users_mobile'), 'users', ['mobile'], unique=True)
     op.create_table('portfolio',
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('mobile', sa.String(), nullable=False),
     sa.Column('sticker', sa.String(length=10), nullable=False),
     sa.ForeignKeyConstraint(['mobile'], ['users.mobile'], ),
-    sa.PrimaryKeyConstraint('mobile', 'sticker')
+    sa.PrimaryKeyConstraint('id', 'mobile', 'sticker')
     )
     # ### end Alembic commands ###
 

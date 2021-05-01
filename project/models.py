@@ -29,6 +29,7 @@ class Portfolio(db.Model, UserMixin):
 
     __tablename__ = "portfolio"
 
+    id = db.Column(db.Integer, primary_key=True)
     mobile = db.Column(db.String, db.ForeignKey('users.mobile'), primary_key=True)
     sticker = db .Column(db.String(10), nullable=False, primary_key=True)
 
