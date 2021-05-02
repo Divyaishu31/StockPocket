@@ -1,8 +1,8 @@
-"""New Twilio account
+"""Working release - 3
 
-Revision ID: 033832ae02fb
+Revision ID: 193aee0066f5
 Revises: 
-Create Date: 2021-05-02 15:17:03.734956
+Create Date: 2021-05-02 15:49:41.359799
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '033832ae02fb'
+revision = '193aee0066f5'
 down_revision = None
 branch_labels = None
 depends_on = None
