@@ -1,9 +1,8 @@
-"""updated constraints
+"""Release check
 
-
-Revision ID: b51de34b776f
+Revision ID: 1945307eb381
 Revises: 
-Create Date: 2021-05-01 13:15:37.985331
+Create Date: 2021-05-02 01:24:14.810397
 
 """
 from alembic import op
@@ -11,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b51de34b776f'
+revision = '1945307eb381'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,7 +31,6 @@ def upgrade():
     sa.Column('sticker', sa.String(length=10), nullable=False),
     sa.ForeignKeyConstraint(['mobile'], ['users.mobile'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('mobile'),
     sa.UniqueConstraint('sticker')
     )
     # ### end Alembic commands ###

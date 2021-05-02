@@ -23,19 +23,19 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.passwordHash, password)
 
     def __repr__(self):
-        return f"User {self.mobile}"
+        return f"{self.mobile}"
 
 class Portfolio(db.Model, UserMixin):
 
     __tablename__ = "portfolio"
 
     id = db.Column(db.Integer, primary_key=True)
-    mobile = db.Column(db.String, db.ForeignKey('users.mobile'), unique=True)
-    sticker = db .Column(db.String(10), nullable=False ,unique=True)
+    mobile = db.Column(db.String, db.ForeignKey('users.mobile'))
+    sticker = db .Column(db.String(10), nullable=False)
 
     def __init__(self, mobile, sticker):
         self.mobile = mobile
         self.sticker = sticker
 
     def __repr__(self):
-        return f"User {self.mobile} Stock {self.sticker}"
+        return f"{self.sticker}"
