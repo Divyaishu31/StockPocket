@@ -17,7 +17,5 @@ admina = Admin(application)
 admina.add_view(MyModelViewP(Portfolio,db.session))
 admina.add_view(MyModelViewU(User,db.session))
 
-print("you viewed admin panel")
-
 if __name__ == '__main__':
     application.run(debug=True, use_reloader=False)

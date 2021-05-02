@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-
 <div class="container">
-
   <br>
-
   <br>
   <br>
   <p>{{description}}</p>
@@ -14,26 +10,19 @@
       <td></td>
       <td><h3>{{company_name1}}</h3></td>
       <td><h3>{{company_name2}}</h3></td>
-
     </tr>
     <tr>
       <th>Current Value</th>
       <td>{{i11}}</td>
       <td>{{i12}}</td>
     </tr>
-
     {% for names,ids,id in tv %}
-
-
     <tr>
     <th> {{names}} </th>
     <td> {{ids}} </td>
     <td>{{id}}</td>
     </tr>
     {% endfor %}
-
   </table>
 </div>
-
-
 {% endblock %}

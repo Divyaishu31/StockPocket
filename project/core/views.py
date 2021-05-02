@@ -61,17 +61,11 @@ def company():
 
 @core.route("/",methods=["GET", "POST"])
 def index():
-
     form = About()
-
     if form.validate_on_submit():
         stock = form.tag.data
-
-
-
         return redirect(url_for("core.company",stock = stock))
     return render_template("search.html",form = form)
-
 
 @core.route("/info")
 def info():
