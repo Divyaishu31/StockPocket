@@ -76,13 +76,13 @@ def addStock():
     if form.validate_on_submit():
 
         stock = Portfolio(mobile=current_user.mobile, sticker=form.sticker.data)
+        check_stock = Portfolio.query.filter(Portfolio.mobile == str(stock.mobile),Portfolio.sticker == str(stock.sticker)).first()
+        print(type(check_stock))
+        print(check_stock)
 
-        db.session.add(stock)
-        db.session.commit()
-
-        stock = Portfolio.query.filter_by(mobile=current_user.mobile)
-        print(stock.all())
-
+        if check_stock == None :
+            db.session.add(stock)
+            db.session.commit()
         return redirect(url_for("users.addStock"))
 
     return render_template("addStock.html",form=form)
