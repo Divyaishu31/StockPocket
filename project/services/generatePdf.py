@@ -4,8 +4,8 @@ from twilio.rest import Client
 
 import datetime
 
-account_sid = 'ACa742d41a965006039b4c6b9a7dfd2632'
-auth_token = '4328c3ee9c9a6ae4472fee2356a09d20'
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
 client = Client(account_sid, auth_token)
 
 def generate(quoteData):
