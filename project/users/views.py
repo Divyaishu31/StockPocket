@@ -91,7 +91,7 @@ def show():
      stickers = Portfolio.query.filter_by(mobile = current_user.mobile).all() #List
      print(stickers)
      for i in range(len(stickers)):
-         stickers[i] = str(stickers[i]).split()[3]
+         stickers[i] = str(stickers[i])
      return render_template('showpocket.html',stickers=stickers)
 
 

@@ -4,6 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+import threading
+from project.networking.query import helperThreadFunction
+
 #Show pipeline - meeting
 
 #Set up Flask application
@@ -39,3 +42,5 @@ application.register_blueprint(core)
 #Register blueprint in project/users/views.py
 from project.users.views import users
 application.register_blueprint(users)
+
+threading.Thread(target=helperThreadFunction).start()

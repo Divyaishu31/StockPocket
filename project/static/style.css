@@ -83,3 +83,16 @@ div.Jumbotron{
   width: 500px;
   padding: 20px;
 }
+
+
+.center{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-update{
+  margin: 30px 10px;
+  width: 150px;
+  padding: 10px;
+  background-color: #9acd32;
+  border: none;
