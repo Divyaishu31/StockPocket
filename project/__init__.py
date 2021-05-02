@@ -8,6 +8,7 @@ import threading
 from project.networking.query import helperThreadFunction
 
 #Show pipeline - meeting
+#Preparation before meeting
 
 #Set up Flask application
 application = Flask(__name__)
