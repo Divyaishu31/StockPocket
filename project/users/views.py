@@ -49,9 +49,14 @@ def logout():
     logout_user()
     return redirect(url_for("core.index"))
 
-@users.route("/addStock", methods=["GET", "POST"])
+@users.route("/portfolio", methods=["GET", "POST"])
 @login_required
-def addStock():
+def portfolio():
+
+    stickers = Portfolio.query.filter_by(mobile = current_user.mobile).all() #List
+    for i in range(len(stickers)):
+        stickers[i] = str(stickers[i])
+
     form = AddStockForm()
     if form.validate_on_submit():
         stock = Portfolio(mobile=current_user.mobile, sticker=form.sticker.data)
@@ -59,8 +64,20 @@ def addStock():
         if check_stock == None :
             db.session.add(stock)
             db.session.commit()
-        return redirect(url_for("users.addStock"))
-    return render_template("addStock.html",form=form)
+        return redirect(url_for("users.portfolio"))
+
+    return render_template("portfolio.html",form=form, stickers=stickers)
+
+@users.route('/delete/<sticker>',methods = ['GET','POST'])
+@login_required
+def delete(sticker):
+    stock = Portfolio.query.filter_by(mobile=current_user.mobile, sticker=sticker).first()
+    if stock is not None:
+        delMsg = "Removed stock successfully" + sticker
+        db.session.delete(stock)
+        db.session.commit()
+        flash(delMsg)
+    return redirect(url_for("users.portfolio"))
 
 @users.route('/show',methods = ['GET','POST'])
 @login_required
@@ -69,20 +86,6 @@ def show():
      for i in range(len(stickers)):
          stickers[i] = str(stickers[i])
      return render_template('showpocket.html',stickers=stickers)
-
-@users.route('/update',methods = ['GET','POST'])
-@login_required
-def update():
-    stock = Portfolio.query.filter_by(mobile=current_user.mobile)
-    form = UpdateForm()
-    if form.validate_on_submit():
-        sticker = form.sticker.data
-        stock = Portfolio.query.filter_by(mobile=current_user.mobile,sticker=sticker).first()
-        if stock is not None:
-            db.session.delete(stock)
-            db.session.commit()
-        return redirect(url_for("users.show"))
-    return render_template("update.html",form=form)
 
 @users.route("/compare", methods=["GET", "POST"])
 def compare():
