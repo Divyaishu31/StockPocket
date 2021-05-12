@@ -1,8 +1,8 @@
-"""finalized
+"""Working release!
 
-Revision ID: b75d347155e3
+Revision ID: 4ca8c65c6ef9
 Revises: 
-Create Date: 2021-05-02 16:21:34.407150
+Create Date: 2021-05-12 18:07:22.006748
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b75d347155e3'
+revision = '4ca8c65c6ef9'
 down_revision = None
 branch_labels = None
 depends_on = None
