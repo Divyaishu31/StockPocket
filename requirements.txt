@@ -35,3 +35,4 @@ WTForms==2.1
 twilio
 bs4
 apscheduler
+flask_admin
