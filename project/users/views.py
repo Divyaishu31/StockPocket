@@ -90,8 +90,35 @@ def show():
 @users.route("/compare", methods=["GET", "POST"])
 def compare():
     try:
-        stck1 = request.args.get('stock1')
-        stck2 = request.args.get('stock2')
+        findd1 = request.args.get('stock1')
+        findd2 = request.args.get('stock2')
+
+        find1= ""
+        find2=""
+        for i in findd1:
+            if i == " ":
+                find1 += "%20"
+            else:
+                find1 += i
+        for i in findd2:
+            if i == " ":
+                find2 += "%20"
+            else:
+                find2 += i
+
+
+
+        stck_find_url1 = "https://in.finance.yahoo.com/lookup?s=" + find1
+        stck_find_page1 = urlopen(stck_find_url1)
+        stck_find_soup1 = BeautifulSoup(stck_find_page1,'html.parser')
+        stck1 = stck_find_soup1.find_all("td", {"class": "data-col0 Ta(start) Pstart(6px) Pend(15px)"})[0].string
+
+
+        stck_find_url2 = "https://in.finance.yahoo.com/lookup?s=" + find2
+        stck_find_page2 = urlopen(stck_find_url2)
+        stck_find_soup2 = BeautifulSoup(stck_find_page2,'html.parser')
+        stck2 = stck_find_soup2.find_all("td", {"class": "data-col0 Ta(start) Pstart(6px) Pend(15px)"})[0].string
+
         url1 = "https://in.finance.yahoo.com/quote/" + stck1
         url2 = "https://in.finance.yahoo.com/quote/" + stck2
         page1 = urlopen(url1)
@@ -143,6 +170,7 @@ def compare():
                 value2.append(l2[1][i])
                 return render_template("compare.html",company_name1=company_name1,i11=i11,company_name2=company_name2,i12=i12,tv=zip(tag1,value1,value2))
     except Exception as e:
+
         return render_template("errorPages/404.html")
 
 @users.route("/sercom", methods=["GET", "POST"])

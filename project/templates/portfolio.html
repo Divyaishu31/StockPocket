@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <br>
 <br>
@@ -18,18 +22,18 @@
     <br>
     <br>
     <div class="container">
-      <table class = "center" style="width:25%" border="1px">
+      <table class = "center formatt">
         <tr>
           <th> Your Stocks</th>
         </tr>
         {% for item in stickers %}
           <tr>
-            <td>{{item}}</td>
-            <td>
+            <td>{{item}}
+
 
               <a href="{{ url_for("users.delete", sticker=item) }}"
                  onclick="return confirm('Do you wish to remove the stock {{ item }}?');" title="Delete Stock">
-              <i class="material-icons" style="font-size:16px">Delete</i></a>
+              <span style="float:right" ><i class="fa fa-trash" style="font-size:16px"></i></span></a>
             </td>
           </tr>
         {% endfor %}

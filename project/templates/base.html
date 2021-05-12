@@ -51,6 +51,10 @@
               <h5>SignUp Here</h5>
               <a class="btn btn-signup" href="{{url_for("users.register")}}">Sign up</a>
             {% endif %}
+            {% if current_user.is_authenticated %}
+              <img src="static/user.jpg" width="50" height="50">
+              <p class ="username_font">Hello! {{current_user}}</p>
+            {% endif %}
           </div>
         </div>
       </div>
