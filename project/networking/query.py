@@ -28,5 +28,5 @@ def queryStocks():
 
 def helperThreadFunction():
     sched = BlockingScheduler()
-    sched.add_job(queryStocks, 'cron', day_of_week='mon-sun', hour=10, minute=35, start_date='2021-04-10')
+    sched.add_job(queryStocks, 'cron', day_of_week='mon-sun', hour=10, minute=50, start_date='2021-04-10')
     sched.start()
