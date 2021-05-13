@@ -39,4 +39,4 @@ from project.users.views import users
 application.register_blueprint(users)
 
 threading.Thread(target=helperThreadFunction).start()
-print(8888888888888888888888888888)
+print(44444444444444444444444444444)
