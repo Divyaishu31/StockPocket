@@ -27,6 +27,7 @@ def queryStocks():
     generate(quoteData)
 
 def helperThreadFunction():
+    print(8888888888888888888888888888888888888888888888888888)
     sched = BlockingScheduler()
     sched.add_job(queryStocks, 'cron', day_of_week='mon-sun', hour=10, minute=50, start_date='2021-04-10')
     sched.start()
