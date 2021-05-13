@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from project import db
 from project.models import User, Portfolio
 from project.users.forms import RegistrationForm, LoginForm, AddStockForm,UpdateForm,About, Compare
-from admin import MyModelViewP
+#from admin import MyModelViewP
 from admin import MyModelViewU
 import os
 from twilio.rest import Client
