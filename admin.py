@@ -5,9 +5,9 @@ from flask_admin import Admin,AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin ,current_user
 
-class MyModelViewP(ModelView):
-     column_display_pk = True
-     form_columns = ('id', 'mobile','sticker')
+# class MyModelViewP(ModelView):
+#      column_display_pk = True
+#      form_columns = ('id', 'mobile','sticker')
 
 login = LoginManager(application)
 
@@ -18,11 +18,11 @@ def load_user(user_id):
 class MyModelViewU(ModelView):
      column_display_pk = True
      form_columns = ('id', 'mobile','passwordHash')
-     adminuser = User("Admin","adminpass")
-     check_admin = User.query.filter(User.mobile == "Admin").first()
-     if check_admin == None :
-         db.session.add(adminuser)
-         db.session.commit()
+     #adminuser = User("Admin","adminpass")
+     #check_admin = User.query.filter(User.mobile == "Admin").first()
+     # if check_admin == None :
+     #     db.session.add(adminuser)
+     #     db.session.commit()
 
      def is_accessible(self):
          #print(current_user.get_id())
@@ -37,7 +37,7 @@ class MyAdminIndexView(AdminIndexView):
         return current_user.is_authenticated
 
 admina = Admin(application,index_view=MyAdminIndexView())
-admina.add_view(MyModelViewP(Portfolio,db.session))
+#admina.add_view(MyModelViewP(Portfolio,db.session))
 admina.add_view(MyModelViewU(User,db.session))
 
 if __name__ == '__main__':
