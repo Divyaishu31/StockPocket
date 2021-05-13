@@ -40,5 +40,5 @@ admina = Admin(application,index_view=MyAdminIndexView())
 admina.add_view(MyModelViewP(Portfolio,db.session))
 admina.add_view(MyModelViewU(User,db.session))
 
-# if __name__ == '__main__':
-#     application.run(debug=True, use_reloader=False)
+if __name__ == '__main__':
+    application.run(debug=True, use_reloader=False)
