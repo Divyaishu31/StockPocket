@@ -24,7 +24,7 @@
               <a class="text" href="{{url_for("core.index")}}">Home</a>
               <a class="text" href="{{url_for("users.sercom")}}">Compare</a>
               {% if current_user.is_authenticated %}
-                <a class="text" href="{{url_for("users.addStock")}}">Add Stock</a>
+                <a class="text" href="{{url_for("users.portfolio")}}">Portfolio</a>
               {% endif %}
               {% if not current_user.is_authenticated %}
                 <a class="text" href="{{url_for("users.login")}}">Log in</a>
@@ -52,8 +52,8 @@
               <a class="btn btn-signup" href="{{url_for("users.register")}}">Sign up</a>
             {% endif %}
             {% if current_user.is_authenticated %}
-              <a class="btn btn-update" href="{{url_for("users.update")}}">Update Your Pocket</a>
-              <p>Hello! {{current_user}}</p>
+              <img src="static/user.jpg" width="50" height="50">
+              <p class ="username_font">Hello! {{current_user}}</p>
             {% endif %}
           </div>
         </div>

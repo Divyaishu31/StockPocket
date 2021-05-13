@@ -33,10 +33,10 @@ class UpdateForm(FlaskForm):
 
 class About(FlaskForm):
 
-    tag = StringField("Company Tag", validators = [DataRequired()])
+    tag = StringField("Company Name", validators = [DataRequired()])
     submit = SubmitField("Search")
 
 class Compare(FlaskForm):
-    comp1 = StringField("Company Tag", validators=[DataRequired()])
+    comp1 = StringField("Company Name", validators=[DataRequired()])
     comp2 = StringField("Compare With", validators=[DataRequired()])
     submit = SubmitField("Compare")

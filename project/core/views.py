@@ -8,8 +8,18 @@ core = Blueprint("core", __name__) #"core" (in parentheses) is the name of the b
 @core.route("/company", methods=["GET", "POST"])
 def company():
     try:
-        stck = request.args.get('stock')
-        print(stck)
+        findd = request.args.get('stock')
+        find = ""
+        for i in findd:
+            if i == " ":
+                find += "%20"
+            else:
+                find += i
+        stck_find_url = "https://in.finance.yahoo.com/lookup?s=" + find
+        stck_find_page = urlopen(stck_find_url)
+        stck_find_soup = BeautifulSoup(stck_find_page,'html.parser')
+        stck = stck_find_soup.find_all("td", {"class": "data-col0 Ta(start) Pstart(6px) Pend(15px)"})[0].string
+
 
         url1 = "https://in.finance.yahoo.com/quote/" + stck + "/profile"
         url2 = "https://in.finance.yahoo.com/quote/" + stck
@@ -24,14 +34,11 @@ def company():
 
 
         company_name = soup.find_all("h1", {"class": "D(ib) Fz(18px)"})[0].string
-
         i1 = soup.find_all("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})[0].string
-
-        #i2 = soup.find_all("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($negativeColor"})[0].string
-
-
-        description=soup.find_all("p",{"class": "Mt(15px) Lh(1.6)"})[0].string
-
+        try:
+            description=soup.find_all("p",{"class": "Mt(15px) Lh(1.6)"})[0].string
+        except Exception as e:
+            description = ""
 
 
         table = soup1.find_all("table", {"class": "W(100%)"})
@@ -66,7 +73,3 @@ def index():
         stock = form.tag.data
         return redirect(url_for("core.company",stock = stock))
     return render_template("search.html",form = form)
-
-@core.route("/info")
-def info():
-    return render_template("info.html")

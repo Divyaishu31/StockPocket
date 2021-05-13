@@ -49,9 +49,14 @@ def logout():
     logout_user()
     return redirect(url_for("core.index"))
 
-@users.route("/addStock", methods=["GET", "POST"])
+@users.route("/portfolio", methods=["GET", "POST"])
 @login_required
-def addStock():
+def portfolio():
+
+    stickers = Portfolio.query.filter_by(mobile = current_user.mobile).all() #List
+    for i in range(len(stickers)):
+        stickers[i] = str(stickers[i])
+
     form = AddStockForm()
     if form.validate_on_submit():
         stock = Portfolio(mobile=current_user.mobile, sticker=form.sticker.data)
@@ -59,8 +64,20 @@ def addStock():
         if check_stock == None :
             db.session.add(stock)
             db.session.commit()
-        return redirect(url_for("users.addStock"))
-    return render_template("addStock.html",form=form)
+        return redirect(url_for("users.portfolio"))
+
+    return render_template("portfolio.html",form=form, stickers=stickers)
+
+@users.route('/delete/<sticker>',methods = ['GET','POST'])
+@login_required
+def delete(sticker):
+    stock = Portfolio.query.filter_by(mobile=current_user.mobile, sticker=sticker).first()
+    if stock is not None:
+        delMsg = "Removed stock successfully" + sticker
+        db.session.delete(stock)
+        db.session.commit()
+        flash(delMsg)
+    return redirect(url_for("users.portfolio"))
 
 @users.route('/show',methods = ['GET','POST'])
 @login_required
@@ -70,25 +87,38 @@ def show():
          stickers[i] = str(stickers[i])
      return render_template('showpocket.html',stickers=stickers)
 
-@users.route('/update',methods = ['GET','POST'])
-@login_required
-def update():
-    stock = Portfolio.query.filter_by(mobile=current_user.mobile)
-    form = UpdateForm()
-    if form.validate_on_submit():
-        sticker = form.sticker.data
-        stock = Portfolio.query.filter_by(mobile=current_user.mobile,sticker=sticker).first()
-        if stock is not None:
-            db.session.delete(stock)
-            db.session.commit()
-        return redirect(url_for("users.show"))
-    return render_template("update.html",form=form)
-
 @users.route("/compare", methods=["GET", "POST"])
 def compare():
     try:
-        stck1 = request.args.get('stock1')
-        stck2 = request.args.get('stock2')
+        findd1 = request.args.get('stock1')
+        findd2 = request.args.get('stock2')
+
+        find1= ""
+        find2=""
+        for i in findd1:
+            if i == " ":
+                find1 += "%20"
+            else:
+                find1 += i
+        for i in findd2:
+            if i == " ":
+                find2 += "%20"
+            else:
+                find2 += i
+
+
+
+        stck_find_url1 = "https://in.finance.yahoo.com/lookup?s=" + find1
+        stck_find_page1 = urlopen(stck_find_url1)
+        stck_find_soup1 = BeautifulSoup(stck_find_page1,'html.parser')
+        stck1 = stck_find_soup1.find_all("td", {"class": "data-col0 Ta(start) Pstart(6px) Pend(15px)"})[0].string
+
+
+        stck_find_url2 = "https://in.finance.yahoo.com/lookup?s=" + find2
+        stck_find_page2 = urlopen(stck_find_url2)
+        stck_find_soup2 = BeautifulSoup(stck_find_page2,'html.parser')
+        stck2 = stck_find_soup2.find_all("td", {"class": "data-col0 Ta(start) Pstart(6px) Pend(15px)"})[0].string
+
         url1 = "https://in.finance.yahoo.com/quote/" + stck1
         url2 = "https://in.finance.yahoo.com/quote/" + stck2
         page1 = urlopen(url1)
@@ -140,6 +170,7 @@ def compare():
                 value2.append(l2[1][i])
                 return render_template("compare.html",company_name1=company_name1,i11=i11,company_name2=company_name2,i12=i12,tv=zip(tag1,value1,value2))
     except Exception as e:
+
         return render_template("errorPages/404.html")
 
 @users.route("/sercom", methods=["GET", "POST"])
