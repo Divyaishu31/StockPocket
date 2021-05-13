@@ -6,7 +6,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from project.services.generatePdf import generate
 
 def queryStocks():
-    print(2222222222222222222222)
     from project import db
     from project.models import User, Portfolio
 
@@ -28,8 +27,6 @@ def queryStocks():
     generate(quoteData)
 
 def helperThreadFunction():
-    print(8888888888888888888888888888888888888888888888888888)
     sched = BlockingScheduler()
-    print(111111111111111111111111111)
     sched.add_job(queryStocks, 'cron', day_of_week='mon-sun', hour=12, minute=25, start_date='2021-04-10')
     sched.start()
